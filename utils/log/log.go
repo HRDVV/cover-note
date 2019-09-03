@@ -14,9 +14,9 @@ import (
 )
 
 const (
-	INFO_COLOR = "%c[1;32m%s%c[0m"
+	INFO_COLOR  = "%c[1;32m%s%c[0m"
 	ERROR_COLOR = "%c[1;31m%s%c[0m"
-	WARN_COLOR = "%c[1;33m%s%c[0m"
+	WARN_COLOR  = "%c[1;33m%s%c[0m"
 )
 
 var colorMap = map[int]string{
@@ -26,9 +26,9 @@ var colorMap = map[int]string{
 }
 
 /**
-	一般级别
- */
-func Info(args ...interface{}){
+一般级别
+*/
+func Info(args ...interface{}) {
 	if _, file, line, ok := runtime.Caller(1); ok {
 		_, filename := path.Split(file)
 		prefix := formatLog("INFO", filename, line)
@@ -39,9 +39,9 @@ func Info(args ...interface{}){
 }
 
 /**
-	错误级别
+错误级别
 */
-func Error(args ...interface{}){
+func Error(args ...interface{}) {
 	if _, file, line, ok := runtime.Caller(1); ok {
 		_, filename := path.Split(file)
 		prefix := formatLog("ERROR", filename, line)
@@ -52,9 +52,9 @@ func Error(args ...interface{}){
 }
 
 /**
-	警告级别
+警告级别
 */
-func Warn(args ...interface{}){
+func Warn(args ...interface{}) {
 	if _, file, line, ok := runtime.Caller(1); ok {
 		_, filename := path.Split(file)
 		prefix := formatLog("WARN", filename, line)
@@ -65,8 +65,8 @@ func Warn(args ...interface{}){
 }
 
 /**
-	公共的日志生成逻辑
- */
+公共的日志生成逻辑
+*/
 func commonLogger(levelColor int, prefix string, args ...interface{}) {
 	switch len(args[0].([]interface{})) {
 	case 1:
@@ -86,26 +86,28 @@ func commonLogger(levelColor int, prefix string, args ...interface{}) {
 
 		var msgSlice = args[0].([]interface{})[1:]
 		var msgs string
+		var builder strings.Builder
 		for _, item := range msgSlice {
-			msgs += item.(string)
+			builder.WriteString(item.(string))
 		}
+		msgs = builder.String()
 		if msgs != "" {
 			if ok, err := regexp.MatchString(`(\s\S)*(%\[\d+\])(\s\S)*`, f); err == nil && ok {
 				re, _ := regexp.Compile(`%\[(\d+)\]`)
 				// 为了实现%[1]s的功能，原因是颜色占用了一个位置，需要往前挪一位
 				newStr := re.ReplaceAllFunc([]byte(f), func(b1 []byte) []byte {
 					reChild, _ := regexp.Compile(`\d+`)
-					return reChild.ReplaceAllFunc(b1, func(b2 []byte) []byte{
+					return reChild.ReplaceAllFunc(b1, func(b2 []byte) []byte {
 						num, _ := strconv.Atoi(string(b2))
 						return []byte(strconv.Itoa(num + 1))
 					})
 				})
 				fmt.Printf(colorMap[levelColor], 0x1B, prefix, 0x1B)
-				fmt.Printf(combineColorFormat(levelColor, string(newStr)), 0x1B, msgs , 0x1B)
+				fmt.Printf(combineColorFormat(levelColor, string(newStr)), 0x1B, msgs, 0x1B)
 				return
 			}
 			fmt.Printf(colorMap[levelColor], 0x1B, prefix, 0x1B)
-			fmt.Printf(combineColorFormat(levelColor, f), 0x1B, msgs , 0x1B)
+			fmt.Printf(combineColorFormat(levelColor, f), 0x1B, msgs, 0x1B)
 		} else {
 			combineLogPrefix(ERROR_COLOR, prefix, "not found msg")
 		}
@@ -113,23 +115,23 @@ func commonLogger(levelColor int, prefix string, args ...interface{}) {
 }
 
 /**
-	拼接前缀
- */
+拼接前缀
+*/
 func combineLogPrefix(format string, prefix string, msg interface{}) {
 	fmt.Printf(format, 0x1B, prefix, 0x1B)
-	fmt.Printf(format + "\n", 0x1B, msg, 0x1B)
+	fmt.Printf(format+"\n", 0x1B, msg, 0x1B)
 }
 
 /**
-	生成带颜色的格式
+生成带颜色的格式
 */
-func combineColorFormat(levelColor int, s string) string{
-	return "%c[1;" + strconv.Itoa(levelColor) + "m"+ s +"%c[0m\n"
+func combineColorFormat(levelColor int, s string) string {
+	return "%c[1;" + strconv.Itoa(levelColor) + "m" + s + "%c[0m\n"
 }
 
 /**
-	日志前缀
+日志前缀
 */
-func formatLog(level, filename string, line int) string{
+func formatLog(level, filename string, line int) string {
 	return "[" + level + "]|" + filename + ":" + strconv.Itoa(line) + "|" + time.Now().String()[:19] + "| "
 }
