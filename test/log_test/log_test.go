@@ -5,6 +5,7 @@ import (
 	"covernote-backend/utils/jwt"
 	"covernote-backend/utils/log"
 	"covernote-backend/utils/redis"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -78,7 +79,7 @@ func TestTag(t *testing.T) {
 func TestJwt(t *testing.T) {
 	var jwt jwt.Jwt
 	var user model.User
-	user.UserId = "1"
+	user.UserId = 1
 	user.Username = "hrd"
 	token, err := jwt.GenerateToken(user)
 	if err == nil {
@@ -93,3 +94,41 @@ func TestParseToken(t *testing.T) {
 		log.Info(claims.Audience)
 	}
 }
+
+func DemoInterface(args ...interface{}) {
+	fmt.Println(args[0])
+}
+
+func TestInterface(t *testing.T) {
+	DemoInterface("3","3")
+}
+
+func TestHscan(t *testing.T) {
+	log.Info(redis.HScan("list", "*"))
+}
+
+func TestHset(t *testing.T) {
+	for i:=0;i<2000;i++ {
+		redis.HSet("list", strconv.Itoa(i), strconv.Itoa(i))
+	}
+}
+
+func TestIncr(t *testing.T) {
+	redis.HDel("list", "0")
+}
+
+func TestDefer(t *testing.T) {
+	defer func() {
+		if err := recover(); err != nil {
+			log.Info(err.(error).Error())
+		}
+	}()
+	panic(errors.New("wewe"))
+}
+
+func TestHGet(t *testing.T) {
+	log.Info(redis.HGet1("USER:INFO_TABLE", "20"))
+
+}
+
+

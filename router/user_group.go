@@ -8,6 +8,7 @@ import (
 func UserGroup(r gin.IRouter) {
 	list := r.Group("/user")
 	{
-		list.POST("", c.Login)
+		list.POST("/login", c.Login)
+		list.POST("/register", c.Register)
 	}
 }

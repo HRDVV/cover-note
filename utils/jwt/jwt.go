@@ -17,7 +17,7 @@ func (j *Jwt) GenerateToken(user model.User) (string, error) {
 	j.claims = jwt.StandardClaims{
 		Audience:  user.Username,     // 受众
 		ExpiresAt: j.expiresTime,     // 失效时间
-		Id:        user.UserId,       // 编号
+		//Id:        user.Username,       // 编号
 		IssuedAt:  time.Now().Unix(), // 签发时间
 		Issuer:    "covernote",       // 签发人
 		NotBefore: time.Now().Unix(), // 生效时间

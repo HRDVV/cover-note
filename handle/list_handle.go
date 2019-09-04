@@ -5,14 +5,14 @@ import (
 )
 import . "covernote-backend/model"
 
-func GetListAll(context *gin.Context) {
-	context.Header("Content-Type", "application/json")
+func GetListAll(ctx *gin.Context) {
+	ctx.Header("Content-Type", "application/json")
 	list := map[string]string{
 		"username": "韩瑞达",
 		"userId":   "1",
 	}
 
-	context.JSON(200, new(ResponseModel).Succ(list))
+	ctx.JSON(200, new(Result).Succ(list))
 }
 
 //func AddList(context *gin.Context) {

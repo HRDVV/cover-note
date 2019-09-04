@@ -5,14 +5,14 @@ import (
 	"strconv"
 )
 
-type ResponseModel struct {
+type Result struct {
 	Code    string      `json:"code"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data"`
 	Success bool        `json:"success"`
 }
 
-func (r *ResponseModel) Succ(d interface{}) *ResponseModel {
+func (r *Result) Succ(d interface{}) *Result {
 	r.Code = strconv.Itoa(http.StatusOK)
 	r.Message = ""
 	r.Data = d
@@ -20,8 +20,8 @@ func (r *ResponseModel) Succ(d interface{}) *ResponseModel {
 	return r
 }
 
-func (r *ResponseModel) Fail(code string, message string, d interface{}) *ResponseModel {
-	r.Code = code
+func (r *Result) Fail(code int, message string, d interface{}) *Result {
+	r.Code = strconv.Itoa(code)
 	r.Message = message
 	r.Data = nil
 	r.Success = false
