@@ -1,12 +1,12 @@
 package log_test
 
 import (
-	"covernote-backend/model"
-	"covernote-backend/utils/jwt"
-	"covernote-backend/utils/log"
-	"covernote-backend/utils/redis"
 	"errors"
 	"fmt"
+	"github.com/HRDVV/cover-note/model"
+	"github.com/HRDVV/cover-note/utils/jwt"
+	"github.com/HRDVV/cover-note/utils/log"
+	"github.com/HRDVV/cover-note/utils/redis"
 	"io/ioutil"
 	"os"
 	"reflect"
@@ -126,9 +126,5 @@ func TestDefer(t *testing.T) {
 	panic(errors.New("wewe"))
 }
 
-func TestHGet(t *testing.T) {
-	log.Info(redis.HGet1("USER:INFO_TABLE", "20"))
-
-}
 
 

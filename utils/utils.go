@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"covernote-backend/model"
 	"crypto/sha1"
+	"github.com/HRDVV/cover-note/model"
 	"github.com/gin-gonic/gin"
 	"hash"
 	"net/http"

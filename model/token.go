@@ -1,8 +1,8 @@
 package model
 
 import (
-	"covernote-backend/utils/redis"
 	"encoding/json"
+	"github.com/HRDVV/cover-note/utils/redis"
 )
 
 const USER_TOKEN = "USER:TOKEN"
@@ -14,7 +14,7 @@ type Token struct {
 
 func (t *Token) SaveToken() bool {
 	jsonJson, err := json.Marshal(t)
-	if (err != nil) {
+	if err != nil {
 		panic(err)
 	}
 	return redis.HSet(USER_TOKEN, t.Username, string(jsonJson))
@@ -22,7 +22,12 @@ func (t *Token) SaveToken() bool {
 
 func (t *Token) QueryTokenByName() Token {
 	var token Token
-	tJson := redis.HGet(USER_INFO_KEY,  t.Username)
-	json.Unmarshal([]byte(tJson), &token)
+	tJson := redis.HGet(USER_TOKEN,  t.Username)
+	if tJson != "" {
+		err := json.Unmarshal([]byte(tJson), &token)
+		if err != nil {
+			panic(err)
+		}
+	}
 	return token
 }

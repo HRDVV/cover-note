@@ -1,4 +1,4 @@
-module covernote-backend
+module github.com/HRDVV/cover-note
 
 go 1.12
 

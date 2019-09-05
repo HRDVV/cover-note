@@ -1,7 +1,7 @@
 package redis
 
 import (
-	"covernote-backend/config"
+	"github.com/HRDVV/cover-note/config"
 	"github.com/go-redis/redis"
 	"time"
 )

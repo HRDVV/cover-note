@@ -1,8 +1,8 @@
 package jwt
 
 import (
-	"covernote-backend/config"
-	"covernote-backend/model"
+	"github.com/HRDVV/cover-note/config"
+	"github.com/HRDVV/cover-note/model"
 	"github.com/dgrijalva/jwt-go"
 	"time"
 )

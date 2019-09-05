@@ -1,9 +1,9 @@
 package handle
 
 import (
-	. "covernote-backend/model"
-	"covernote-backend/utils"
-	"covernote-backend/utils/jwt"
+	. "github.com/HRDVV/cover-note/model"
+	"github.com/HRDVV/cover-note/utils"
+	"github.com/HRDVV/cover-note/utils/jwt"
 	"encoding/hex"
 	"errors"
 	"github.com/gin-gonic/gin"
@@ -35,7 +35,7 @@ func Login(ctx *gin.Context) {
 				t.AccessKey = accessKey
 				t.Username = user.Username
 				t.SaveToken()
-				ctx.JSON(http.StatusOK, new(Result).Succ(true))
+				ctx.JSON(http.StatusOK, new(Result).Succ(accessKey))
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 package router
 
 import (
-	c "covernote-backend/handle"
+	c "github.com/HRDVV/cover-note/handle"
 	"github.com/gin-gonic/gin"
 )
 

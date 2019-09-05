@@ -1,9 +1,8 @@
 package middleware
 
 import (
-	"covernote-backend/model"
-	"covernote-backend/utils/jwt"
-	"fmt"
+	"github.com/HRDVV/cover-note/model"
+	"github.com/HRDVV/cover-note/utils/jwt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
@@ -33,7 +32,6 @@ func AuthLogin() gin.HandlerFunc {
 		}
 		t.Username = claims.Audience
 		if t.QueryTokenByName().AccessKey != accessKey || claims.ExpiresAt < time.Now().Unix() {
-			fmt.Println(claims.Audience)
 			ctx.JSON(http.StatusUnauthorized, new(model.Result).Fail(http.StatusUnauthorized, "无效的token", nil))
 			ctx.Abort()
 			return

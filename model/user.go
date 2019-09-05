@@ -1,8 +1,8 @@
 package model
 
 import (
-	"covernote-backend/utils/redis"
 	"encoding/json"
+	"github.com/HRDVV/cover-note/utils/redis"
 )
 
 const USER_INFO_KEY = "USER:INFO_TABLE"
@@ -28,6 +28,11 @@ func (u *User)QueryAllUser() map[string]string {
 func (u *User)QueryUserByName() User{
 	var user User
 	userJson := redis.HGet(USER_INFO_KEY, u.Username)
-	json.Unmarshal([]byte(userJson), &user)
+	//if userJson != "" {
+	err := json.Unmarshal([]byte(userJson), &user)
+	if err != nil {
+		panic(err)
+	}
+	//}
 	return user
 }
