@@ -7,3 +7,5 @@ const (
 	SECRET         = "HRDVV"
 	JWT_EXP_TIME   = 24 * 3600
 )
+
+var GoEnv = [3]string{"debug", "test", "release"}
