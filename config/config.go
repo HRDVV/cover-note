@@ -4,7 +4,7 @@ const (
 	USE_REDIS_DB   = 1
 	REDIS_ADDR     = "127.0.0.1:6379"
 	REDIS_PASSWORD = ""
-	SECRET         = "cjwdtchrdmain_redis"
+	SECRET         = "HRDVV"
 	JWT_EXP_TIME   = 24 * 3600
 )
 

@@ -2,6 +2,7 @@ package model
 
 import (
 	"encoding/json"
+	"github.com/HRDVV/cover-note/utils/log"
 	"github.com/HRDVV/cover-note/utils/redis"
 )
 
@@ -28,11 +29,12 @@ func (u *User)QueryAllUser() map[string]string {
 func (u *User)QueryUserByName() User{
 	var user User
 	userJson := redis.HGet(USER_INFO_KEY, u.Username)
-	//if userJson != "" {
-	err := json.Unmarshal([]byte(userJson), &user)
-	if err != nil {
-		panic(err)
+	log.Error(userJson)
+	if userJson != "" {
+		err := json.Unmarshal([]byte(userJson), &user)
+		if err != nil {
+			panic(err)
+		}
 	}
-	//}
 	return user
 }
