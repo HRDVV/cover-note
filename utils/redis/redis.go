@@ -1,21 +1,20 @@
 package redis
 
 import (
-	"github.com/HRDVV/cover-note/config"
 	"github.com/go-redis/redis"
+	"github.com/spf13/viper"
 	"time"
 )
 
 const (
 	HSCAN_THRESHOLD int64 = 1000
-	CURSOR_END = 0
+	CURSOR_END            = 0
 )
 
-
 var client = redis.NewClient(&redis.Options{
-	Addr:     config.REDIS_ADDR,
-	Password: config.REDIS_PASSWORD,
-	DB:       config.USE_REDIS_DB,
+	Addr:     viper.GetString("redis.addr"),
+	Password: viper.GetString("redis.password"),
+	DB:       viper.GetInt("redis.db"),
 })
 
 func Get(key string) string {
@@ -77,7 +76,7 @@ func HSet(key string, field string, value interface{}) bool {
 	return isSucc
 }
 
-func HScan (key string, match string) map[string]string {
+func HScan(key string, match string) map[string]string {
 	var keys []string
 	var cursor uint64 = 0
 	var err error
@@ -109,6 +108,3 @@ func HDel(key string, fields ...string) bool {
 		return false
 	}
 }
-
-
-

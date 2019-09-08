@@ -42,7 +42,7 @@ func Info(args ...interface{}) {
 错误级别
 */
 func Error(args ...interface{}) {
-	if _, file, line, ok := runtime.Caller(1); ok {
+	if _, file, line, ok := runtime.Caller(2); ok {
 		_, filename := path.Split(file)
 		prefix := formatLog("ERROR", filename, line)
 		commonLogger(31, prefix, args)

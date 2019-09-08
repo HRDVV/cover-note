@@ -1,0 +1,8 @@
+env: debug
+redis:
+  db: 1
+  addr: 127.0.0.1:6379
+  password: ~
+jwt:
+  secret: HRDVV
+  expTime: 86400

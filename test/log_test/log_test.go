@@ -3,6 +3,7 @@ package log_test
 import (
 	"errors"
 	"fmt"
+	"github.com/HRDVV/cover-note/config"
 	"github.com/HRDVV/cover-note/model"
 	"github.com/HRDVV/cover-note/utils/jwt"
 	"github.com/HRDVV/cover-note/utils/log"
@@ -79,7 +80,6 @@ func TestTag(t *testing.T) {
 func TestJwt(t *testing.T) {
 	var jwt jwt.Jwt
 	var user model.User
-	user.UserId = 1
 	user.Username = "hrd"
 	token, err := jwt.GenerateToken(user)
 	if err == nil {
@@ -100,7 +100,7 @@ func DemoInterface(args ...interface{}) {
 }
 
 func TestInterface(t *testing.T) {
-	DemoInterface("3","3")
+	DemoInterface("3", "3")
 }
 
 func TestHscan(t *testing.T) {
@@ -108,7 +108,7 @@ func TestHscan(t *testing.T) {
 }
 
 func TestHset(t *testing.T) {
-	for i:=0;i<2000;i++ {
+	for i := 0; i < 2000; i++ {
 		redis.HSet("list", strconv.Itoa(i), strconv.Itoa(i))
 	}
 }
@@ -126,5 +126,7 @@ func TestDefer(t *testing.T) {
 	panic(errors.New("wewe"))
 }
 
-
-
+func TestConfig(t *testing.T) {
+	var c config.Config
+	t.Log(c.GetAbsPath("dev.yaml"))
+}

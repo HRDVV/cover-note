@@ -1,14 +1,12 @@
 package bootstrap
 
 import (
-	"github.com/HRDVV/cover-note/config"
 	"github.com/HRDVV/cover-note/middleware"
 	"github.com/gin-gonic/gin"
 )
 import r "github.com/HRDVV/cover-note/router"
 
 func Bootstrap() {
-	gin.SetMode(config.GoEnv[2])
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
