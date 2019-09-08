@@ -38,7 +38,6 @@ type Jwt struct {
 func (c *Config) LoadConfig(filename string) {
 	viper.SetConfigName(filename)
 	viper.AddConfigPath("app_context")
-	viper.AddConfigPath(".")
 	viper.SetConfigType("yaml")
 	err := viper.ReadInConfig()
 	if err != nil {
