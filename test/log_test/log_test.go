@@ -128,5 +128,5 @@ func TestDefer(t *testing.T) {
 
 func TestConfig(t *testing.T) {
 	var c config.Config
-	t.Log(c.GetAbsPath("dev.yaml"))
+	t.Log(c.GetAbsPath("application.yaml"))
 }

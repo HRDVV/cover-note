@@ -8,17 +8,6 @@ import (
 )
 
 type Config struct {
-	Development
-	Production
-}
-
-type Development struct {
-	Env string
-	Redis
-	Jwt
-}
-
-type Production struct {
 	Env string
 	Redis
 	Jwt
@@ -35,8 +24,10 @@ type Jwt struct {
 	ExpTime int
 }
 
-func (c *Config) LoadConfig(filename string) {
-	viper.SetConfigName(filename)
+var GlobalConfig Config
+
+func init() {
+	viper.SetConfigName("application")
 	viper.AddConfigPath("app_context")
 	viper.SetConfigType("yaml")
 	err := viper.ReadInConfig()
@@ -44,8 +35,17 @@ func (c *Config) LoadConfig(filename string) {
 		fmt.Printf("config file error: %s\n", err)
 		os.Exit(1)
 	}
+	var config Config
+	err = viper.Unmarshal(&config)
+	if err != nil {
+		panic(err)
+	}
+	GlobalConfig = config
 	viper.WatchConfig()
 	viper.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("配置发生变更：", e.Name)
 	})
 }
+
+
+

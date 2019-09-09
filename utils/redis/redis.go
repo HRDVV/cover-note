@@ -1,8 +1,8 @@
 package redis
 
 import (
+	"github.com/HRDVV/cover-note/config"
 	"github.com/go-redis/redis"
-	"github.com/spf13/viper"
 	"time"
 )
 
@@ -12,9 +12,9 @@ const (
 )
 
 var client = redis.NewClient(&redis.Options{
-	Addr:     viper.GetString("redis.addr"),
-	Password: viper.GetString("redis.password"),
-	DB:       viper.GetInt("redis.db"),
+	Addr:     config.GlobalConfig.Redis.Addr,
+	Password: config.GlobalConfig.Redis.Password,
+	DB:       config.GlobalConfig.Redis.Db,
 })
 
 func Get(key string) string {
